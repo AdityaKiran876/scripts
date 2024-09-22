@@ -35,5 +35,22 @@ do
 	fi
 	break
 done
+#Using while loop until the if condition is satisfied
+while true 
+do
+#Taking input from a user 
+	read -p "Enter a line of text (Press Enter without text to exit): " line
+#This will count the number of characters in a string
+	echo "Character Count: ${#line}"
+#If the character count is 0 then this will exit the loop and come out of while loop as well
+	if [ ${#line} -eq 0 ];
+	then
+		break
+	else 
+		continue
+	fi
+	break
+done
 
+echo "Exiting the Interactive Explorer. Goodbye!"
 
