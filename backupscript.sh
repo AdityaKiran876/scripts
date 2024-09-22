@@ -5,9 +5,9 @@ Usage:
 ./backupscript.sh <path of directory>
 Readme
 src_dir=$1
-target_dir=$2
+#target_dir=$2
 timestamp=$(date '+%Y-%m-%d-%H-%M-%S')
-backup_dir="${target_dir}/backup_${timestamp}"
+backup_dir="${src_dir}/backup_${timestamp}"
 
 function create_backup {
 	
@@ -19,9 +19,9 @@ function create_backup {
 	fi
 }
 function backup_rotation {
-	backups=($(ls -t "$target_dir/backup_"*.zip))
-	if [ "${#backups[@]}" -gt 5 ]; then
-		backupstoremove=("${backups[@]:5}")
+	backups=($(ls -t "$src_dir/backup_"*.zip))
+	if [ "${#backups[@]}" -gt 3 ]; then
+		backupstoremove=("${backups[@]:3}")
 		for backup in "${backupstoremove[@]}";
 		do
 			rm "$backup"
