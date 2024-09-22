@@ -4,7 +4,7 @@ This script takes backup of any given directory.
 Usage:
 ./backupscript.sh <path of directory>
 Readme
-#Taking source direectory from argument1
+#Taking source directory from argument1
 src_dir=$1
 #target_dir=$2
 timestamp=$(date '+%Y-%m-%d-%H-%M-%S')
