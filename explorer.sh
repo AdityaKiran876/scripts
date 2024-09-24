@@ -32,6 +32,8 @@ do
 		echo "...."
 #Exiting from the loop 
 		break
+  	else 
+   		echo "Please choose correct option (y/n)."
 	fi
 	break
 done
