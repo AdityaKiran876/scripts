@@ -7,52 +7,49 @@ Comments
 
 echo "Welcome to the Interactive File and Directory Explorer!"
 
-#This function shows the files and directories and their size
-fileslisting() {
-
-	echo "Files and directories in current path :"
-
-	ls -sh | awk 'NR>1 {print "-"$2 " ("$1")"}'
-}
-
-
 #Taking continuous loop with true
 while true
 do
+#To list files and directories in the current path
 
-	fileslisting
+	echo "Listing Files and Directories :"
+
+        ls -sh | awk 'NR>1 {print "-"$2 " ("$1")"}'
 	
 #Reading input from user to check if the user wants to continue or exit
 	read -p "Do you want to see the files again? If yes type y if no type n: " option
 
-	if [ $option == "y" ]; then
+	if [[ "$option" == "y" ]]; then
 		continue
 
-	elif [ $option == "n" ]; then
-		echo "...."
-#Exiting from the loop 
+	elif [[ $option == "n" ]]; then
+		echo "Exiting file listing...." 
 		break
   	else 
    		echo "Please choose correct option (y/n)."
 		continue
 	fi
-	break
 done
-#Using while loop until the if condition is satisfied
-while true 
-do
+
+#Using while loop until the user enters an empty line
+
+while true; do
+
 #Taking input from a user 
+	
 	read -p "Enter a line of text (Press Enter without text to exit): " line
-#This will count the number of characters in a string
-	echo "Character Count: ${#line}"
-#If the character count is 0 then this will exit the loop and come out of while loop as well
+
+#Check if the input is empty
+
 	if [ ${#line} -eq 0 ];
 	then
+		echo "Exiting character counting..."
 		break
-	else 
-		continue
 	fi
-	break
+
+#Display the character count of the input
+
+	echo "Character Count: ${#line}"
 done
 
 echo "Exiting the Interactive Explorer. Goodbye!"
