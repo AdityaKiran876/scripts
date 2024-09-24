@@ -6,6 +6,7 @@ Please use this carefully.
 Usage: ./usermanagement.sh [OPTIONS]
 Comments
 
+#Function to create user
 create_user() {
 	read -p "Enter the username: " username
 	dupli=$( cat /etc/passwd | cut -d: -f1 | grep $username )
@@ -21,6 +22,7 @@ create_user() {
 	fi
 }
 
+#Function to delete user
 delete_user() {
 	
 	read -p "Enter the username to be deleted: " username
@@ -36,12 +38,14 @@ delete_user() {
         fi
 }
 
+#Function to reset password
 passwd_reset() {
 	read -p "Enter the username to change password: " username
 
 	sudo passwd $username
 }
 
+#Function to show help and all options
 help_list() {
 	echo "Usage : ./user_management.sh [OPTIONS]"
 	echo "Options:"
@@ -52,6 +56,7 @@ help_list() {
 	echo "  -h, --help   Display this help and exit."
 }
 
+#Function to list all the users in the system
 list() {
 	
 	echo "User accounts on the system:"
@@ -61,6 +66,7 @@ list() {
 
 option=$1
 
+#Checking if the user option is -h, --help or no argument
 if [ $# -eq 0 ] || [ "$option" == "-h" ] || [ "$option" == "--help" ];
 then
 	help_list
@@ -68,6 +74,7 @@ then
 
 fi
 
+#Used switch case for each different arguments
 case "$1" in
 	-c | --create)
 		create_user 
