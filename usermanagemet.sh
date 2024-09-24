@@ -9,32 +9,33 @@ Comments
 #Function to create user
 create_user() {
 	read -p "Enter the username: " username
-	dupli=$( cat /etc/passwd | cut -d: -f1 | grep $username )
-	if [[ $username == $dupli ]];
-	then
+	if id "$username" &>/dev/null;then
+		
 		echo "The username exists. Please try with another username"
-
-	else 
-		read -p "Enter the password: " password
+		return 1
+	fi
+		
+		read -p "Enter the password: " -s password
         	read -p "Enter your email ID: " email
 
-		sudo useradd -c $email -p $password -m $username
-	fi
+		sudo useradd -c "$email" -m "$username"
+		echo "$username:$password" | sudo chpasswd
+
+		echo "User '$username' created succesfully"
 }
 
 #Function to delete user
 delete_user() {
 	
 	read -p "Enter the username to be deleted: " username
-	
-	dupli=$( cat /etc/passwd | cut -d: -f1 | grep $username )
 
-        if [[ $username == $dupli ]];
-        then
-                sudo userdel -r $username
+        if id "$username" &>/dev/null;then
+                sudo userdel -r "$username"
+		echo "User '$username' deleted succesfully."
 
         else
                  echo "The username is not present. Please try with another username"
+		 return 1
         fi
 }
 
@@ -42,7 +43,12 @@ delete_user() {
 passwd_reset() {
 	read -p "Enter the username to change password: " username
 
-	sudo passwd $username
+	if id "$username" &>/dev/null;then
+		sudo passwd "$username"
+	else 
+		echo "The username '$username' does not exist."
+		return 1
+	fi
 }
 
 #Function to show help and all options
@@ -57,24 +63,22 @@ help_list() {
 }
 
 #Function to list all the users in the system
-list() {
+list_users() {
 	
 	echo "User accounts on the system:"
 	awk -F: '{print "- " $1, "(UID- "$3 ")"}' /etc/passwd
 
 }
 
-option=$1
 
-#Checking if the user option is -h, --help or no argument
-if [ $# -eq 0 ] || [ "$option" == "-h" ] || [ "$option" == "--help" ];
-then
+#Main script logic
+
+if [ $# -eq 0 ]; then
 	help_list
 	exit 0
-
 fi
 
-#Used switch case for each different arguments
+#Switch case to handle options
 case "$1" in
 	-c | --create)
 		create_user 
@@ -86,7 +90,10 @@ case "$1" in
 		passwd_reset
 		;;
 	-l | --list)
-		list
+		list_users
+		;;
+	-h | --help)
+		help_list
 		;;
 	*)
 		echo "Invalid option. Use -h or --help to see the options."
