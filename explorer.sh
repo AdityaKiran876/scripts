@@ -34,6 +34,7 @@ do
 		break
   	else 
    		echo "Please choose correct option (y/n)."
+		continue
 	fi
 	break
 done
