@@ -77,5 +77,6 @@ while true; do
 			echo "Invalid Option. Press enter to continue."
 		fi
 	done
+	sleep 5
 
 done
