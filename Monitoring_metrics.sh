@@ -1,8 +1,9 @@
 #!/bin/bash
-
-
 <<Comments
-
+This script will dislpay the required metrics according to the given menu.
+It will show system metrics like CPU Usage, Memory Usage and Disk Space.
+It will also show the current status of any particular process.
+Usage: ./Monitoring_metrics.sh 
 Comments
 
 # Defined a function to check the process status
@@ -16,12 +17,12 @@ process_check() {
 
 		if [[ $status == "inactive" ]]; then
 			read -p "Do you want to start the process (Y/N): " choice
-			if [[ "$choice" == "Y" ]]; then
+			if [[ "$choice" == "Y" ]] || [[ "$choice" == "y" ]]; then
 				
 				echo "Restarting the process : "$option"...."
         			sudo systemctl restart $option
 				continue
-			elif [[ "$choice" == "N" ]]; then
+			elif [[ "$choice" == "N" ]] || [[ "$choice" == "n" ]]; then
 				 
 				echo "Exiting........."
 				break
@@ -36,6 +37,7 @@ process_check() {
 	done	
 }
 
+#Function to monitor system metrics
 monitor() {
 
 	echo "----------System Metrics------------------"
@@ -47,6 +49,7 @@ monitor() {
 
 while true; do
 
+	#Displaying options
 	echo "---- Monitoring Metrics Script ----"
 	echo "1. View System Metrics"
 	echo "2. Monitor a specific service"
@@ -77,6 +80,7 @@ while true; do
 			echo "Invalid Option. Press enter to continue."
 		fi
 	done
+	#Displays the menu again after 5 sec of interval
 	sleep 5
 
 done
