@@ -12,7 +12,7 @@ Comments
 process_check() {
 	process=$1
 
-	status=$(sudo systemctl is-active "$service_name")
+	status=$(sudo systemctl is-active "$process")
 	echo "$status"
 
 }
@@ -26,11 +26,6 @@ process_restart(){
 }
 
 #Main section
-if [ -z "$1" ]; then
-    echo "Usage: $0 <service_name>"
-    exit 1
-fi
-
 for (( i=1; i<=3; i++ )); 
 do
 	status1=$(process_check $1)
